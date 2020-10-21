@@ -1,0 +1,24 @@
+(Project.config "title" "lispception")
+
+(load "https://github.com/carpentry-org/lua@f7d85341647a74fc122d41074c1c46c50df3846d")
+
+(system-include "/usr/include/lua5.3/lua.h")
+(system-include "/usr/include/lua5.3/lauxlib.h")
+(system-include "/usr/include/lua5.3/lualib.h")
+(add-cflag "-llua5.3")
+
+(defmacro lua-source []
+ (Dynamic.read-file "main.lua"))
+
+(defn evalua [s]
+ (Lua.with-lua-do
+  (Lua.libs lua)
+  (let [code (Lua.do-string lua (cstr s))
+        res (from-cstr-or (Lua.to-string lua -1) @"")]
+    ((if (/= Lua.OK code) Result.Error Result.Success) res))))
+
+(defn main []
+  (match (evalua (lua-source))
+    (Result.Success output) (println* output)
+    (Result.Error err) (println* err)))
+
