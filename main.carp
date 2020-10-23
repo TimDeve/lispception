@@ -1,11 +1,10 @@
 (Project.config "title" "lispception")
 
-(load "https://github.com/carpentry-org/lua@f7d85341647a74fc122d41074c1c46c50df3846d")
+(load "https://github.com/carpentry-org/lua@304e0fdbe0c9bfd4ec5d8d2b0513d7db11d9cbd8")
 
-(system-include "/usr/include/lua5.3/lua.h")
-(system-include "/usr/include/lua5.3/lauxlib.h")
-(system-include "/usr/include/lua5.3/lualib.h")
-(add-cflag "-llua5.3")
+(Lua.setup
+  "/usr/include/lua5.3/"
+  "lua5.3")
 
 (defmacro lua-source []
  (Dynamic.read-file "main.lua"))

@@ -1,2 +1,4 @@
-(print "Hello from fennel")
-(+ 1 1)
+(fn hello [name] (.. "Hello " name "!"))
+
+(hello "Fennel")
+
